@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void printArray(int arr[], int size, int step) {
-    printf("Bước %d: ", step);
+void printArray(int arr[], int size) {
     for (int i = 0; i < size; i++) {
         printf("%d ", arr[i]);
     }
@@ -26,10 +25,10 @@ void shakerSort(int arr[], int n) {
                 swapped = true;
             }
         } 
-        printArray(arr, n, step++);
+        printArray(arr, n);
         right--;
 
-        if (!swapped) break;
+        if (!swapped) break;// Nếu không có hoán đổi nào, mảng đã sắp xếp
 
         swapped = false;
 
@@ -42,23 +41,22 @@ void shakerSort(int arr[], int n) {
                 swapped = true;
             }
         }
-        printArray(arr, n, step++);
+        printArray(arr, n);
         left++;
     }
 }
-
 int main() {
     int arr[] = {3, 6, 1, -1, 0, 5, 8, 2, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
 
     printf("Mảng ban đầu:\n");
-    printArray(arr, n, 0);
+    printArray(arr, n);
 
     printf("\nQuá trình sắp xếp (Shaker Sort):\n");
     shakerSort(arr, n);
 
     printf("\nMảng sau khi sắp xếp:\n");
-    printArray(arr, n, 0);
+    printArray(arr, n);
 
     return 0;
 }
