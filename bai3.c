@@ -1,49 +1,42 @@
 #include <stdio.h>
-#include <stdbool.h>
 
-void printArray(int arr[], int size, int step) {
-    printf("Bước %d: ", step);
+// Hàm in trạng thái mảng
+void printArray(int arr[], int size) {
     for (int i = 0; i < size; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
 }
 
-void shakerSort(int arr[], int n) {
-    int left = 0, right = n - 1;
-    int step = 1;
-    bool swapped = true;
+// Hàm tìm vị trí chèn bằng tìm kiếm nhị phân
+int binarySearch(int arr[], int item, int low, int high) {
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (item == arr[mid])
+            return mid + 1;
+        else if (item > arr[mid])
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return low;
+}
 
-    while (swapped) {
-        swapped = false;
+// Thuật toán chèn nhị phân
+void binaryInsertionSort(int arr[], int n) {
+    int i, j, key, loc;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        loc = binarySearch(arr, key, 0, i - 1);
 
-        // Duyệt từ trái sang phải
-        for (int i = left; i < right; i++) {
-            if (arr[i] > arr[i + 1]) {
-                int temp = arr[i];
-                arr[i] = arr[i + 1];
-                arr[i + 1] = temp;
-                swapped = true;
-            }
-        } 
-        printArray(arr, n, step++);
-        right--;
+        // Dịch chuyển phần tử để chèn key vào đúng vị trí
+        for (j = i - 1; j >= loc; j--)
+            arr[j + 1] = arr[j];
 
-        if (!swapped) break;
+        arr[loc] = key;
 
-        swapped = false;
-
-        // Duyệt từ phải sang trái
-        for (int i = right; i > left; i--) {
-            if (arr[i] < arr[i - 1]) {
-                int temp = arr[i];
-                arr[i] = arr[i - 1];
-                arr[i - 1] = temp;
-                swapped = true;
-            }
-        }
-        printArray(arr, n, step++);
-        left++;
+        // In trạng thái mảng sau mỗi bước
+        printArray(arr, n);
     }
 }
 
@@ -52,13 +45,13 @@ int main() {
     int n = sizeof(arr) / sizeof(arr[0]);
 
     printf("Mảng ban đầu:\n");
-    printArray(arr, n, 0);
+    printArray(arr, n);
 
-    printf("\nQuá trình sắp xếp (Shaker Sort):\n");
-    shakerSort(arr, n);
+    printf("\nQuá trình sắp xếp (Chèn nhị phân):\n");
+    binaryInsertionSort(arr, n);
 
     printf("\nMảng sau khi sắp xếp:\n");
-    printArray(arr, n, 0);
+    printArray(arr, n);
 
     return 0;
 }
