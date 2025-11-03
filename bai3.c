@@ -25,7 +25,7 @@ void shakerSort(int arr[], int n) {
                 arr[i + 1] = temp;
                 swapped = true;
             }
-        }
+        } 
         printArray(arr, n, step++);
         right--;
 
